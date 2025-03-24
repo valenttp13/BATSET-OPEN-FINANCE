@@ -63,11 +63,8 @@ IF NOT EXIST "data\database.sqlite" (
 )
 
 ECHO.
-ECHO === Instalacion completada ===
+ECHO  Instalacion exitosa 
 ECHO.
-ECHO Para ejecutar el programa:
-ECHO 1. El entorno virtual esta activado
-ECHO 2. Ejecuta: python src/main.py
 ECHO.
 
 REM Preguntar si desea ejecutar el programa

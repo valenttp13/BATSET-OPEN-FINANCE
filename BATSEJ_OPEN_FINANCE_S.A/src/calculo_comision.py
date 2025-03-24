@@ -1,7 +1,17 @@
+"""
+Módulo para calcular comisiones basadas en transacciones exitosas y no exitosas.
+
+Funciones:
+    - filtrar_datos: Filtra transacciones y comercios activos.
+    - calcular_comision: Calcula la comisión, IVA y total según la empresa.
+    - calcular_comisiones: Genera un resumen de comisiones por comercio.
+"""
+
 import pandas as pd
 from datetime import datetime
 
 def filtrar_datos(datos_apicall, datos_commerce):
+    """Filtra comercios activos y transacciones de julio y agosto 2024."""
     datos_commerce = datos_commerce[datos_commerce['commerce_status'] == 'Active']
     datos_apicall['date_api_call'] = pd.to_datetime(datos_apicall['date_api_call'])
     datos_apicall = datos_apicall[
@@ -11,6 +21,7 @@ def filtrar_datos(datos_apicall, datos_commerce):
     return datos_apicall, datos_commerce
 
 def calcular_comision(empresa, exitosas, no_exitosas):
+    """Calcula comisión, IVA y total según tarifas y descuentos."""
     tarifas = {
         "Innovexa Solutions": 300,
         "QuantumLeap Inc.": 600,
@@ -24,12 +35,7 @@ def calcular_comision(empresa, exitosas, no_exitosas):
     if empresa in tarifas:
         valor_comision = exitosas * tarifas[empresa]
     elif empresa == "NexaTech Industries":
-        if exitosas <= 10000:
-            valor_comision = exitosas * 250
-        elif exitosas <= 20000:
-            valor_comision = exitosas * 200
-        else:
-            valor_comision = exitosas * 170
+        valor_comision = exitosas * (250 if exitosas <= 10000 else 200 if exitosas <= 20000 else 170)
     elif empresa == "Zenith Corp.":
         valor_comision = exitosas * (250 if exitosas <= 22000 else 130)
     else:
@@ -43,6 +49,7 @@ def calcular_comision(empresa, exitosas, no_exitosas):
     return valor_comision, valor_iva, valor_comision + valor_iva
 
 def calcular_comisiones(datos_apicall, datos_commerce):
+    """Genera resumen de comisiones por comercio."""
     datos_apicall, datos_commerce = filtrar_datos(datos_apicall, datos_commerce)
     datos_apicall = datos_apicall.merge(datos_commerce, on='commerce_id', how='left')
     

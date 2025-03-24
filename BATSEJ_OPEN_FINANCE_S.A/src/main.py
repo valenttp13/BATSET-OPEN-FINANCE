@@ -18,10 +18,10 @@ def obtener_ruta_base():
 
 def mostrar_menu():
     print("\n--- Menú de Opciones ---")
-    print("1. Cargar datos de la base de datos")
+    print("1. Cargar datos")
     print("2. Calcular comisiones")
-    print("3. Generar reporte en Excel")
-    print("4. Enviar reporte por correo (Separados por ;)")
+    print("3. Generar Excel")
+    print("4. Enviar correo")
     print("5. Salir")
     print("------------------------")
 
